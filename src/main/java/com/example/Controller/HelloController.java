@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-
 @Controller
 public class HelloController {
 
-    static  Logger logger = Logger.getLogger(HelloController.class);
+    private static Logger logger = Logger.getLogger(HelloController.class);
     @Value("${age}")
     private String age;
     @Value("${size}")
     private int size;
 
     public static void main(String[] args) {
-        logger.info("------");
+        logger.info("info");
+        logger.error("error");
+        logger.warn("warn");
+        logger.debug("debug");
     }
 
     //http://localhost:8080/hello/12
@@ -38,7 +40,7 @@ public class HelloController {
     @RequestMapping(value = "/set", method = RequestMethod.GET)
     @ResponseBody
     public Customer setEntity(String name) {
-        Customer customer=new Customer();
+        Customer customer = new Customer();
         customer.setName(name);
         return customer;
     }
@@ -60,6 +62,7 @@ public class HelloController {
         model.addAttribute("name", "Dear");
         return "hello";
     }
+
     /**
      * 测试hello
      *
@@ -79,11 +82,12 @@ public class HelloController {
         return "index";
     }
 
-    public String cookie(HttpServletRequest request,HttpServletResponse response){
-        Cookie cookie=new Cookie("name","lin");
+    public String cookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie cookie = new Cookie("name", "lin");
         response.addCookie(cookie);
-        Cookie[] c=request.getCookies();
+        Cookie[] c = request.getCookies();
         return "";
 
     }
+
 }

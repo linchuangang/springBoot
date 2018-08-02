@@ -22,6 +22,9 @@ public class UserController {
 
     static Logger logger = Logger.getLogger(HelloController.class);
 
+    public static void main(String[] args) {
+        logger.info("------");
+    }
     @Autowired
     UserDao userDao;
 
