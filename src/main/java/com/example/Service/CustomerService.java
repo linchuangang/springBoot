@@ -1,8 +1,7 @@
 package com.example.Service;
 
-import com.example.Dao.Customer2Dao;
-import com.example.Dao.Customer3Dao;
-import com.example.Entity.Customer;
+
+import com.example.Dao.customer.Customer3Dao;
 import com.example.Entity.CustomerCoupon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,9 +22,6 @@ import java.util.List;
 public class CustomerService {
 
     @Autowired
-    Customer2Dao customer2Dao;
-
-    @Autowired
     Customer3Dao customer3Dao;
 
     @Autowired
@@ -34,6 +30,7 @@ public class CustomerService {
     public List<CustomerCoupon> getList() {
         String sql = "select id,coupon_name,p_customer_id as customerId from p_customer_coupon order by id limit 0,2";
         List<CustomerCoupon> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper(CustomerCoupon.class));
+
         return list;
     }
 

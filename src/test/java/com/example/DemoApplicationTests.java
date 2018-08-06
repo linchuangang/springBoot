@@ -1,9 +1,9 @@
 package com.example;
 
 import com.alibaba.fastjson.JSON;
-import com.example.Dao.Customer2Dao;
-import com.example.Dao.Customer3Dao;
-import com.example.Dao.CustomerDao;
+
+import com.example.Dao.customer.Customer3Dao;
+import com.example.Dao.customer.CustomerDao;
 import com.example.Entity.CustomerCoupon;
 import com.example.Service.CustomerService;
 
@@ -32,8 +32,7 @@ public class DemoApplicationTests {
     @Autowired
     CustomerDao customerDao;
 
-    @Autowired
-    Customer2Dao customer2Dao;
+
     @Autowired
     Customer3Dao customer3Dao;
 
@@ -63,7 +62,7 @@ public class DemoApplicationTests {
     @Test
     public void testOther() {
         PageRequest page = new PageRequest(1, 5);
-        Page<CustomerCoupon> list = customer2Dao.findAll(page);
+        Page<CustomerCoupon> list = customerDao.findAll(page);
         System.out.println("=====" + JSON.toJSONString(list));
 
     }

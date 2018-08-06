@@ -1,7 +1,7 @@
 package com.example.Controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.Dao.UserDao;
+import com.example.Dao.user.UserDao;
 import com.example.Entity.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
-import java.util.jar.JarEntry;
 
 /**
  * Created by Administrator on 2018/7/31.
@@ -30,6 +29,9 @@ public class UserController {
 
     @RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
     public String test() {
+
+
+
         return "yeyeyeye";
     }
 

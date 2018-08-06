@@ -1,4 +1,4 @@
-package com.example.Dao;
+package com.example.Dao.customer;
 
 import com.example.Entity.CustomerCoupon;
 import org.springframework.data.domain.Page;
