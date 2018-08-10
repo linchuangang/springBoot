@@ -1,4 +1,5 @@
 import com.alibaba.fastjson.JSONArray;
+import com.example.Redis.RedisClient;
 import com.example.Util.RandomUtil;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
@@ -67,5 +68,10 @@ public class TestOther {
        char a= RandomUtil.getRandomChar();
         System.out.println(a);
 
+
+
     }
+
+
+
 }
