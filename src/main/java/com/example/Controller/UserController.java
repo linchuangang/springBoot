@@ -29,9 +29,6 @@ public class UserController {
 
     @RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
     public String test() {
-
-
-
         return "yeyeyeye";
     }
 
