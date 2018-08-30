@@ -27,6 +27,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
+//@SpringApplicationConfiguration(classes = ServletInitializar.class)// 1.4.0 前版本加载启动文件
 public class DemoApplicationTests {
     Logger logger = LoggerFactory.getLogger(DemoApplicationTests.class);
     @Autowired
