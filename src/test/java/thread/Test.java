@@ -1,3 +1,5 @@
+package thread;
+
 /**
  * Created by lincg on 2017/6/28.
  */

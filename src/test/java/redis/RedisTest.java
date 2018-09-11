@@ -1,5 +1,6 @@
-package com.example;
+package redis;
 
+import com.example.DemoApplicationTests;
 import com.example.Redis.RedisClient;
 import com.example.Redis.RedisUtil;
 import org.junit.Test;
