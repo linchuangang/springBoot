@@ -40,9 +40,6 @@ public abstract class BaseHbaseDao<T> {
 	// 存放对象的HBase相关的Meta信息
 	private static Map<Class<?>, HBaseObjectMeta> modelMetas = new ConcurrentHashMap<Class<?>, HBaseObjectMeta>();
 
-	// spring定义的hbase操作类
-//    @Resource
-//    private HbaseTemplate hbaseTemplate;
     @Resource
     HbaseUtil hbaseUtil;
 
@@ -65,9 +62,6 @@ public abstract class BaseHbaseDao<T> {
 		}
 	}
 
-//	public void setHbaseTemplate(HbaseTemplate hbaseTemplate) {
-//		this.hbaseTemplate = hbaseTemplate;
-//	}
 
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
@@ -83,13 +77,10 @@ public abstract class BaseHbaseDao<T> {
 			throw new RuntimeException("Empty hbaseModels");
 		}
 
-		HBaseObjectMeta hoMeta = getHBaseObjectMeta(hbaseModels.get(0)
-				.getClass());
+		HBaseObjectMeta hoMeta = getHBaseObjectMeta(hbaseModels.get(0).getClass());
 
 		if (logger.isDebugEnabled()) {
-			logger.debug(String.format(
-					" Batch insert to (%s) with (%d) record.",
-					hoMeta.getFullTableName(namespace), hbaseModels.size()));
+			logger.debug(String.format(" Batch insert to (%s) with (%d) record.", hoMeta.getFullTableName(namespace), hbaseModels.size()));
 		}
 
         hbaseUtil.hbaseTemplate().execute(
@@ -101,33 +92,24 @@ public abstract class BaseHbaseDao<T> {
 					RowkeyFieldMeta rfMeta = hoMeta.getRowkeyFieldMeta();
 
 					for (Object hbaseModel : hbaseModels) {
-						Put put = new Put(Bytes.toBytes(rfMeta
-								.getRowkey(hbaseModel)));
+						Put put = new Put(Bytes.toBytes(rfMeta.getRowkey(hbaseModel)));
 
 						// 设置所有的Column
-						for (ColumnFieldMeta cfMeta : hoMeta
-								.getColumnFieldMetas()) {
+						for (ColumnFieldMeta cfMeta : hoMeta.getColumnFieldMetas()) {
 							// 判断值不为空
-							byte[] columnValue = cfMeta
-									.getFieldValue(hbaseModel);
+							byte[] columnValue = cfMeta.getFieldValue(hbaseModel);
 							if (columnValue != null) {
-								put.addColumn(cfMeta.getCfName().getBytes(),
-										Bytes.toBytes(cfMeta.getColumnName()),
-										columnValue);
-
+								put.addColumn(cfMeta.getCfName().getBytes(), Bytes.toBytes(cfMeta.getColumnName()), columnValue);
 								items.add(put);
 							}
 						}
 
 						if (logger.isDebugEnabled()) {
-							logger.debug(String.format(" Add Put = %s",
-									JSON.toJSONString(put)));
+							logger.debug(String.format(" Add Put = %s", JSON.toJSONString(put)));
 						}
 					}
-
 					// 批量加入到表
 					table.put(items);
-
 					return true;
 				});
 
@@ -135,7 +117,6 @@ public abstract class BaseHbaseDao<T> {
 			logger.debug(String.format(" after batch insert (%s)",
 					hoMeta.getFullTableName(namespace)));
 		}
-
 		return hbaseModels.size() ;
 	}
 
@@ -213,34 +194,6 @@ public abstract class BaseHbaseDao<T> {
 	}
 
 	/**
-	 * 根据字段的值过滤数据
-	 *
-	 * @param modelCls
-	 * @param filterStrs
-	 *            - 过滤字符串 .如果为空就是全表扫描
-	 * @return public List<T> queryHBaseRecordsWithFilter(Class<?> modelCls,
-	 *         Map<String, String> filterStrs) { HBaseObjectMeta hoMeta =
-	 *         getHBaseObjectMeta(modelCls);
-	 *
-	 *         // 根据范围查询 Scan scan = new Scan();
-	 *
-	 *         if (filterStrs == null || filterStrs.size() == 0) { // TODO :
-	 *         以后是否需要抛出异常 logger.warn(" Input emptry filterStr for " +
-	 *         hoMeta.getFullTableName(namespace)); } else { FilterList filters
-	 *         = new FilterList(); for (Map.Entry<String, String> entry :
-	 *         filterStrs.entrySet()) { if (hoMeta.existColumn(entry.getKey()))
-	 *         { filters.addFilter(new
-	 *         SingleColumnValueFilter(Bytes.toBytes(entry .getKey()), null,
-	 *         CompareOp.EQUAL, Bytes .toBytes(entry.getValue()))); } else {
-	 *         throw new RuntimeException(String.format(
-	 *         "Invalid column(%s) from hbase table (%s)", entry.getKey(),
-	 *         hoMeta.getFullTableName(namespace))); } }
-	 *         scan.setFilter(filters); }
-	 *
-	 *         return this.innerQueryHBaseRecords(hoMeta, scan); }
-	 */
-
-	/**
 	 * 通用的查询接口
 	 *
 	 * @param modelCls
@@ -265,8 +218,7 @@ public abstract class BaseHbaseDao<T> {
 	public <V extends T> V findLastHBaseRecordWithRowkeyPrefix(Class<V> modelCls,
 			byte[] rowPrefix, byte[] startRow, byte[] stopRow) {
 		if (logger.isDebugEnabled()) {
-			logger.debug(String
-					.format("findLastHBaseRecordWithRowkeyPrefix(%s) rowPrefix(%s) , startRow(%s) , stopRow(%s)",
+			logger.debug(String.format("findLastHBaseRecordWithRowkeyPrefix(%s) rowPrefix(%s) , startRow(%s) , stopRow(%s)",
 							modelCls.toString() , new String(rowPrefix), new String(startRow),
 							new String(stopRow)));
 		}
@@ -362,14 +314,9 @@ public abstract class BaseHbaseDao<T> {
 								new String(result.getRow()));
 
 						// 设置column的值
-						for (ColumnFieldMeta cfMeta : hoMeta
-								.getColumnFieldMetas()) {
-							cfMeta.setFieldValue(obj, result.getValue(
-									Bytes.toBytes(cfMeta.getCfName()),
-									Bytes.toBytes(cfMeta.getColumnName())));
-
+						for (ColumnFieldMeta cfMeta : hoMeta.getColumnFieldMetas()) {
+							cfMeta.setFieldValue(obj, result.getValue(Bytes.toBytes(cfMeta.getCfName()), Bytes.toBytes(cfMeta.getColumnName())));
 						}
-
 						// 返回对象
 						return obj;
 					}
@@ -400,12 +347,10 @@ public abstract class BaseHbaseDao<T> {
 	 */
 	private static Connection getHbaseConnection (Configuration config) throws IOException{
 		Connection hbaseConn = hbaseConns.get(config) ;
-
 		// 提前做一下连接的检查
 		if(hbaseConn != null && hbaseConn.isClosed()){
 			// 需要关闭错误的连接
 			hbaseConn.close();
-
 			// 从缓存中清除
 			hbaseConns.remove(config) ;
 		}
@@ -414,13 +359,11 @@ public abstract class BaseHbaseDao<T> {
 			// 创建新的连接对象,简单的处理一下并发的问题
 			hbaseConn = ConnectionFactory.createConnection(config) ;
 			Connection oldConn = hbaseConns.put(config, hbaseConn) ;
-
 			// 关闭老的连接(可能是因为并发的原因产生)
 			if(oldConn != null && oldConn != hbaseConn){
 				oldConn.close();
 			}
 		}
-
 		return hbaseConn ;
 	}
 

@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/12/15.
  */
+
 public interface AuditService {
 
     /**
@@ -26,12 +27,14 @@ public interface AuditService {
 
     /**
      * 根据操作类型获取记录
+     *
      * @return
      */
     List<Audit> listAuditsByOperationType(AuditDto auditDto);
 
     /**
      * 根据业务对象类型获取记录
+     *
      * @return
      */
     List<Audit> listAuditsByAuditType(AuditDto auditDto);
@@ -42,6 +45,8 @@ public interface AuditService {
      * @param rowKey
      * @return
      */
+    //@Deprecated  表示方法已经过期，不建议使用
+    @Deprecated
     Audit getAuditByRowKey(String rowKey);
 
 
