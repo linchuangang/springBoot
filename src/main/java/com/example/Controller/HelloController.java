@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
+@RequestMapping("/hello")
 public class HelloController {
 
     private static Logger logger = Logger.getLogger(HelloController.class);

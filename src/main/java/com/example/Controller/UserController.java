@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Administrator on 2018/7/31.
  */
 @RestController
-@RequestMapping(value = "user")
+@RequestMapping(value = "/user")
 public class UserController {
 
     static Logger logger = Logger.getLogger(HelloController.class);
@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     UserDao userDao;
 
-    @RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/test", method = {RequestMethod.POST, RequestMethod.GET})
     public String test() {
         return "yeyeyeye";
     }
