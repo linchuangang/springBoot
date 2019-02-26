@@ -1,5 +1,6 @@
 package com.example.Service;
 
+import com.example.Entity.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +13,27 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class MyUserDetailsService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("用户的用户名: {}", username);
-        // TODO 根据用户名，查找到对应的密码，与权限
-        String password = passwordEncoder.encode("123456");
-        logger.info("password: {}", password);
 
-        // 封装用户信息，并返回。参数分别是：用户名，密码，用户权限
-        User user = new User(username, password,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
-        return user;
+        //假设返回的用户信息如下;
+        UserInfo userInfo = new UserInfo("lcg", "111", "ROLE_ADMIN", true, true, true, true);
+        return userInfo;
     }
 }
