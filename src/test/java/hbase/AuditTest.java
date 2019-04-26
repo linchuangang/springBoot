@@ -18,6 +18,6 @@ public class AuditTest extends DemoApplicationTests {
     @Test
     public void testAudit() {
         Audit audit=auditService.getAuditByRowKey("0769001#0001#1001#3106#1536317279");
-        System.out.println(JSON.toJSONString(audit));
+        System.out.println("---============="+JSON.toJSONString(audit));
     }
 }
