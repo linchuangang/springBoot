@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestSchedule {
 
-//    @Scheduled(cron = "0 0/1 * * * ?")
-//    public void print() {
-//        System.out.println("haha");
-//    }
+    @Scheduled(cron = "0 0/1 * * * ?")
+    public void print() {
+        System.out.println("haha");
+    }
 
 
 }

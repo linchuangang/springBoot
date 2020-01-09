@@ -2,6 +2,7 @@ package com.example.security;
 
 
 import com.example.Entity.UserInfo;
+import com.example.Service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,7 +22,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
      * 注入我们自己定义的用户信息获取对象
      */
     @Autowired
-    private UserDetailsService userDetailService;
+    private MyUserDetailsService userDetailService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userName = authentication.getName();// 这个获取表单输入中返回的用户名;
